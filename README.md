@@ -22,115 +22,174 @@ At a high level, this repo supports a full workflow:
 - **Jupyter Notebook** or **VS Code** or **Google Colab**
   
 ### Platform Used
-- Developed and tested on **Windows** (also compatible with Mac/Linux if Python + packages install correctly).
+- Developed and tested in Google Colab (cloud-based Python environment).
+- Compatible with Windows, Mac with correct package installation.
 
 ### Required Python Packages
 Install the following packages (names shown for `pip`):
-- `pandas`
-- `numpy`
-- `matplotlib`
-- `seaborn`
-- `scikit-learn`
-- `transformers`
-- `tqdm`
+- pandas
+- numpy
+- matplotlib
+- seaborn
+- scikit-learn
+- transformers
+- tqdm
+- emoji
+- langdetect
 
 ---
 
 ## Section 2: Map of Documentation (Repository Structure)
 
-SnowStormersP1/
-│
-├── data/
-├── output/
-├── scripts/
-├── .gitignore
-├── LICENSE.md
-├── README.md
-└── how-to-write-a-readme.md
+      SnowStormersP1/
+      │
+      ├── data/
+      ├── output/
+      ├── scripts/
+      ├── .gitignore
+      ├── LICENSE.md
+      ├── README.md
+      └── how-to-write-a-readme.md
 
 ## Section 3: Instructions to Reproduce Results
 
-Follow these steps to reproduce the MI3 results (metrics + plots) from the cleaned dataset.
+Follow these steps to reproduce all model results and feature analysis outputs.
 
 ### Step 0 — Confirm You Have the Required Dataset
-Make sure the cleaned dataset exists at:
+Make sure the dataset exists at:
 
-data/letterboxd_top250_reviews_clean.csv
+data/LetterboxdTop250-5000reviews.csv
 
 ### Step 1 — Open Google Colab
 
 Go to:
+
 https://colab.research.google.com
 
-Click “New Notebook.”
+Click New Notebook.
 
 Google Colab runs Python in the cloud, so no local installation of Python is required.
 
 ### Step 2 — Upload Required Files
 
-In the Colab notebook:
+Upload the following into Colab (same working directory):
 
-On the left sidebar, click the folder icon.
+Scripts
 
-Click Upload.
+clean_dataset.py
 
-Upload:
+project_1_m13_analysis.py
 
-mi3_analysis.py (from the scripts/ folder)
+Raw dataset
 
-letterboxd_top250_reviews_clean.csv (from the data/ folder)
-
-Both files must be in the same working directory inside Colab.
+LetterboxdTop250-5000reviews.csv
 
 ### Step 3 — Install Required Packages in Colab
 
-!pip install pandas numpy matplotlib seaborn scikit-learn transformers tqdm
+!pip install pandas numpy matplotlib seaborn scikit-learn transformers tqdm emoji langdetect
 
-### Step 4 — Run the Analysis Script
+### Step 4 — Run the Data Cleaning Script
 
 In a new code cell, run:
 
-!python mi3_analysis.py
+!python clean_dataset.py
 
 This script will:
 
-Load the cleaned dataset
+- Load the raw Kaggle file: LetterboxdTop250-5000reviews.csv
 
-Remove empty review text
+- Parse the embedded list columns for ratings and reviews
 
-Convert star ratings to sentiment labels:
+- Convert star strings (★ and ½) into numeric ratings (0.5–5.0)
 
-### < 2.5 → negative
+- Remove missing ratings and empty reviews
 
-### 2.5–3.5 → neutral
+- Export the cleaned review-level dataset:
 
-### > 3.5 → positive
+### Step 5 — Run the Model + Feature Engineering Script
 
-Run the pretrained Hugging Face model:
-cardiffnlp/twitter-roberta-base-sentiment-latest
+In a new code cell, run:
 
-Apply a neutral confidence threshold (0.4–0.6)
+!python project_1_m13_analysis.py
 
-Compute:
+This script will:
 
-Accuracy
+- Model pipeline
 
-Macro F1 score
+- Load letterboxd_top250_reviews_clean.csv
 
-Confusion matrix
+- Convert star ratings into sentiment labels:
 
-Classification report
+        < 2.5 → negative
 
-Display six diagnostic plots:
+        2.5–3.5 → neutral
 
-Confusion matrix heatmap
+        3.5 → positive
 
-Distribution of predicted sentiment
+- Run Hugging Face model:
 
-Boxplot: star ratings by predicted sentiment
+      cardiffnlp/twitter-roberta-base-sentiment-latest
 
-Histogram: confidence scores
+- Apply neutral confidence threshold (0.4–0.6)
 
-Boxplot: confidence (correct vs incorrect)
+- Compute:
 
-Distribution of true sentiment labels
+      Accuracy
+
+      Macro F1 score
+
+      Confusion matrix
+
+      Classification report
+
+      Feature engineering
+
+      Character length, word count
+
+      Emoji count + emoji presence
+
+      Caps ratio
+
+      URL presence
+
+      Exclamation/question counts
+
+      Language detection
+
+      Alphabetic ratio + low text content flag
+
+- Exports
+
+      full_feature_engineering_table.csv
+
+      model_performance.csv
+
+      confusion_matrix.csv
+
+      confusion_matrix.png
+
+      accuracy_by_language.csv
+
+      accuracy_by_emoji.csv
+
+      accuracy_by_length.csv
+
+      accuracy_by_caps_ratio.csv
+
+      accuracy_by_low_text_content.csv
+
+- Visualizations
+
+      Confusion matrix heatmap
+
+      Predicted sentiment distribution
+
+      Star ratings by predicted sentiment
+
+      Confidence score distribution
+
+      Confidence vs correctness
+
+      True sentiment distribution
+
+      Accuracy-by-feature plots (length, caps, emoji, language, low text, confidence vs length)
