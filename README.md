@@ -44,23 +44,46 @@ Install the following packages (names shown for `pip`):
       SnowStormersP1/
       │
       ├── data/
+      │   ├── Data Appendix.pdf
+      │   ├── LetterboxdTop250-5000reviews.csv
+      │   └── letterboxd_top250_reviews_clean.csv
+      │
       ├── output/
+      │   ├── model_performance.csv
+      │   ├── confusion_matrix.csv
+      │   ├── confusion_matrix.png
+      │   ├── accuracy_by_language.csv
+      │   ├── accuracy_by_emoji.csv
+      │   ├── accuracy_by_length.csv
+      │   ├── accuracy_by_caps_ratio.csv
+      │   ├── accuracy_by_low_text_content.csv
+      │   ├── full_feature_engineering_table.csv
+      │   ├── Results.png
+      │   ├── confidence_boxplot.png
+      │   ├── distribution_of_HF_confidence_scores.png
+      │   ├── distribution_of_HF_predicted_sentiment.png
+      │   ├── star_ratings_by_HF_predicted_sentiment.png
+      │   └── true_sentiment_distribution.png
+      │
       ├── scripts/
-      ├── .gitignore
+      │   ├── clean_dataset.py
+      │   └── project_1_m13_analysis.py
+      │
       ├── LICENSE.md
       ├── README.md
       └── how-to-write-a-readme.md
+
 
 ## Section 3: Instructions to Reproduce Results
 
 Follow these steps to reproduce all model results and feature analysis outputs.
 
-### Step 0 — Confirm You Have the Required Dataset
+### Step 1 — Confirm You Have the Required Dataset
 Make sure the dataset exists at:
 
 data/LetterboxdTop250-5000reviews.csv
 
-### Step 1 — Open Google Colab
+### Step 2 — Open Google Colab
 
 Go to:
 
@@ -70,7 +93,7 @@ Click New Notebook.
 
 Google Colab runs Python in the cloud, so no local installation of Python is required.
 
-### Step 2 — Upload Required Files
+### Step 3 — Upload Required Files
 
 Upload the following into Colab (same working directory):
 
@@ -84,11 +107,11 @@ Raw dataset
 
 LetterboxdTop250-5000reviews.csv
 
-### Step 3 — Install Required Packages in Colab
+### Step 4 — Install Required Packages in Colab
 
 !pip install pandas numpy matplotlib seaborn scikit-learn transformers tqdm emoji langdetect
 
-### Step 4 — Run the Data Cleaning Script
+### Step 5 — Run the Data Cleaning Script
 
 In a new code cell, run:
 
@@ -106,7 +129,7 @@ This script will:
 
 - Export the cleaned review-level dataset:
 
-### Step 5 — Run the Model + Feature Engineering Script
+### Step 6 — Run the Model + Feature Engineering Script
 
 In a new code cell, run:
 
